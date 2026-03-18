@@ -132,6 +132,24 @@ function App() {
                 <span className="meta">Seasonal · 6–16 yrs</span>
               </div>
             </div>
+            <h3 className="section-subtitle">Courses by Sport</h3>
+            <div className="grid three courses-grid">
+              <div className="program-card">
+                <h4>Padel Power Clinics</h4>
+                <p>Focused drills to improve control, positioning, and winning tactics on court.</p>
+                <span className="meta">Padel · Intermediate–Advanced</span>
+              </div>
+              <div className="program-card">
+                <h4>Horse Riding Fundamentals</h4>
+                <p>Safe introduction to horse handling, balance, and basic riding skills.</p>
+                <span className="meta">Equestrian · Beginner</span>
+              </div>
+              <div className="program-card">
+                <h4>Tennis Precision Sessions</h4>
+                <p>Serve, forehand, and footwork clinics for players who want sharper technique.</p>
+                <span className="meta">Tennis · All levels</span>
+              </div>
+            </div>
           </section>
         );
       case 'bookings':
@@ -199,7 +217,7 @@ function App() {
 
   return (
     <div className="app-shell">
-      <aside className="sidebar">
+      <header className="topbar">
         <div className="branding">
           <div className="logo-mark">
             <span className="logo-circle" />
@@ -238,10 +256,7 @@ function App() {
             BOOKINGS
           </button>
         </nav>
-        <div className="sidebar-footer">
-          <p>Premium sports & lifestyle hub.</p>
-        </div>
-      </aside>
+      </header>
       <main className="main-area">{renderContent()}</main>
     </div>
   );
