@@ -219,10 +219,10 @@ function App() {
     <div className="app-shell">
       <header className="topbar">
         <div className="branding">
-          <div className="logo-mark">
+          <span className="branding-title">MatchPoint</span>
+          <div className="logo-mark" aria-hidden="true">
             <span className="logo-circle" />
           </div>
-          <span className="branding-text">MatchPoint</span>
         </div>
         <nav className="nav">
           <button
