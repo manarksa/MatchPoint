@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap');
+
 /* Core palette */
 :root {
   --green: #137766;
@@ -11,7 +13,7 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
   background: radial-gradient(circle at top left, rgba(198, 175, 109, 0.15), transparent 55%),
     radial-gradient(circle at bottom right, rgba(19, 119, 102, 0.16), transparent 50%),
     var(--cream);
@@ -109,35 +111,11 @@ body {
 }
 
 .logo-mark {
-  width: 56px;
-  height: 44px;
-  border-radius: 999px 999px 12px 12px;
-  background: linear-gradient(135deg, var(--gold), #e2d2a1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.logo-circle {
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  background: transparent;
-  border: 2.5px solid rgba(13, 70, 60, 0.92);
-  box-shadow: 0 0 0 2px rgba(255, 252, 243, 0.85), inset 0 -2px 4px rgba(0, 0, 0, 0.18);
-  position: relative;
-}
-
-.logo-circle::after {
-  content: '';
-  position: absolute;
-  width: 9px;
-  height: 9px;
-  border-radius: 999px;
-  top: -3px;
-  right: -2px;
-  background: radial-gradient(circle at 30% 30%, #fffcf3, #ead9aa);
+  width: 74px;
+  height: 74px;
+  border-radius: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.16));
 }
 
 .branding-text {
@@ -171,6 +149,7 @@ body {
   padding: 8px 14px;
   border-radius: 999px;
   font-size: 12px;
+  font-family: 'Montserrat', 'Cairo', sans-serif;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
@@ -222,7 +201,7 @@ body {
 }
 
 .footer-title {
-  font-family: ui-serif, Georgia, 'Times New Roman', Times, serif;
+  font-family: 'Montserrat', 'Cairo', sans-serif;
   font-weight: 800;
   font-size: 20px;
   letter-spacing: 0.14em;
@@ -481,6 +460,7 @@ body {
   letter-spacing: 0.02em;
   text-transform: none;
   color: var(--ink);
+  text-align: center;
 }
 
 .home-subtitle {
@@ -489,6 +469,8 @@ body {
   font-size: 14px;
   line-height: 1.8;
   max-width: 700px;
+  text-align: center;
+  margin-inline: auto;
 }
 
 .sport-grid {
@@ -514,8 +496,28 @@ body {
   position: relative;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-  max-width: 540px;
-  justify-self: center;
+  max-width: none;
+  width: 100%;
+}
+
+.sport-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.12) 55%, rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+.sport-card--hero {
+  grid-column: 1 / -1;
+}
+
+.sport-card--hero .sport-img {
+  height: 420px;
+}
+
+.sport-card--half .sport-img {
+  height: 220px;
 }
 
 .sport-card:hover {
@@ -533,31 +535,26 @@ body {
 }
 
 .sport-img--horse {
-  object-position: 20% 35%;
-}
-
-.sport-img--archery {
-  object-position: 60% 35%;
+  object-position: center 20%;
 }
 
 .sport-img--badminton {
-  object-position: 45% 25%;
+  object-position: center 40%;
 }
 
 .sport-img--padel {
-  object-position: 30% 30%;
+  object-position: center 55%;
 }
 
 .sport-overlay {
   position: absolute;
   inset: auto 14px 14px 14px;
-  padding: 14px 14px 12px;
-  border-radius: 18px;
-  background: rgba(255, 252, 243, 0.84);
-  border: 1px solid rgba(19, 119, 102, 0.18);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
-  color: var(--ink);
-  backdrop-filter: blur(14px);
+  padding: 12px 10px 10px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: #fff;
+  z-index: 1;
 }
 
 .sport-kind-badge {
@@ -565,24 +562,25 @@ body {
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  background: rgba(19, 119, 102, 0.08);
-  border: 1px solid rgba(19, 119, 102, 0.16);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.42);
   padding: 6px 10px;
   border-radius: 999px;
-  color: rgba(19, 119, 102, 0.96);
+  color: #fff;
 }
 
 .sport-name {
   margin: 12px 0 8px;
   font-size: 20px;
   letter-spacing: 0.02em;
+  color: #fff;
 }
 
 .sport-desc {
   margin: 0;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.7;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .sport-actions {
@@ -592,9 +590,9 @@ body {
 }
 
 .ghost-btn {
-  border: 1px solid rgba(19, 119, 102, 0.22);
-  background: rgba(255, 252, 243, 0.8);
-  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.56);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
   border-radius: 999px;
   padding: 10px 14px;
   font-size: 12px;
@@ -605,8 +603,8 @@ body {
 }
 
 .ghost-btn:hover {
-  background: rgba(19, 119, 102, 0.07);
-  border-color: rgba(19, 119, 102, 0.32);
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
 .ghost-btn:active {

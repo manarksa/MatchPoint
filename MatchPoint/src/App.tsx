@@ -17,118 +17,94 @@ function App() {
       case 'home':
         return (
           <section className="section section--home">
-            <h2 className="home-title">اختر رياضتك وابدأ التدريب أو احجز الآن</h2>
+            <h2 className="home-title">Choose your sport and start your journey today</h2>
             <p className="home-subtitle">
-              واجهة مختصرة تجهزك لخطوة العضوية أو المتجر بسهولة، وكل كارد يوصلك مباشرة.
+              Discover premium training experiences with direct access to memberships and pro shop
+              essentials.
             </p>
             <div className="sport-grid">
-              <article className="sport-card">
+              <article className="sport-card sport-card--hero">
                 <img
-                  src="/matchpoint-hero.png"
-                  alt="ركوب الخيل"
+                  src="/horse.jpg"
+                  alt="Horse riding"
                   className="sport-img sport-img--horse"
                 />
                 <div className="sport-overlay">
                   <span className="sport-kind-badge">Horse Riding</span>
-                  <h3 className="sport-name">ركوب الخيل</h3>
-                  <p className="sport-desc">جلسات آمنة وتدريب تدريجي للمستويات المختلفة.</p>
+                  <h3 className="sport-name">Horse Riding</h3>
+                  <p className="sport-desc">Safe, progressive coaching designed for every level.</p>
                   <div className="sport-actions">
                     <button
                       type="button"
                       className="ghost-btn"
                       onClick={() => goTo('Horse Riding', 'membership')}
                     >
-                      العضوية
+                      Membership
                     </button>
                     <button
                       type="button"
                       className="primary-btn sport-primary-btn"
                       onClick={() => goTo('Horse Riding', 'proshop')}
                     >
-                      المتجر
+                      ProShop
                     </button>
                   </div>
                 </div>
               </article>
 
-              <article className="sport-card">
+              <article className="sport-card sport-card--half">
                 <img
-                  src="/matchpoint-hero.png"
-                  alt="رماية السهام"
-                  className="sport-img sport-img--archery"
+                  src="/padel.jpg"
+                  alt="Padel"
+                  className="sport-img sport-img--padel"
                 />
-                <div className="sport-overlay">
-                  <span className="sport-kind-badge">Archery</span>
-                  <h3 className="sport-name">رماية السهام</h3>
-                  <p className="sport-desc">تحكم ودقة مع مدربين يركزون على الأساسيات.</p>
-                  <div className="sport-actions">
-                    <button
-                      type="button"
-                      className="ghost-btn"
-                      onClick={() => goTo('Archery', 'membership')}
-                    >
-                      العضوية
-                    </button>
-                    <button
-                      type="button"
-                      className="primary-btn sport-primary-btn"
-                      onClick={() => goTo('Archery', 'proshop')}
-                    >
-                      المتجر
-                    </button>
-                  </div>
-                </div>
-              </article>
-
-              <article className="sport-card">
-                <img
-                  src="/matchpoint-hero.png"
-                  alt="طائرة الريشة"
-                  className="sport-img sport-img--badminton"
-                />
-                <div className="sport-overlay">
-                  <span className="sport-kind-badge">Badminton</span>
-                  <h3 className="sport-name">طائرة الريشة</h3>
-                  <p className="sport-desc">سرعة ولياقة وتقنيات ضرب تناسب كل الأعمار.</p>
-                  <div className="sport-actions">
-                    <button
-                      type="button"
-                      className="ghost-btn"
-                      onClick={() => goTo('Badminton', 'membership')}
-                    >
-                      العضوية
-                    </button>
-                    <button
-                      type="button"
-                      className="primary-btn sport-primary-btn"
-                      onClick={() => goTo('Badminton', 'proshop')}
-                    >
-                      المتجر
-                    </button>
-                  </div>
-                </div>
-              </article>
-
-              <article className="sport-card">
-                <img src="/matchpoint-hero.png" alt="البادل" className="sport-img sport-img--padel" />
                 <div className="sport-overlay">
                   <span className="sport-kind-badge">Padel</span>
-                  <h3 className="sport-name">البادل</h3>
-                  <p className="sport-desc">مهارات قوية وتكتيكات لعب وخيارات تدريب مرنة.</p>
+                  <h3 className="sport-name">Padel</h3>
+                  <p className="sport-desc">Power, precision, and tactical training for all players.</p>
                   <div className="sport-actions">
                     <button
                       type="button"
                       className="ghost-btn"
                       onClick={() => goTo('Padel', 'membership')}
                     >
-                      العضوية
+                      Membership
                     </button>
                     <button
                       type="button"
                       className="primary-btn sport-primary-btn"
                       onClick={() => goTo('Padel', 'proshop')}
                     >
-                      المتجر
+                      ProShop
+                    </button>
+                  </div>
+                </div>
+              </article>
+
+              <article className="sport-card sport-card--half">
+                <img
+                  src="/badminton.jpg"
+                  alt="Badminton"
+                  className="sport-img sport-img--badminton"
+                />
+                <div className="sport-overlay">
+                  <span className="sport-kind-badge">Badminton</span>
+                  <h3 className="sport-name">Badminton</h3>
+                  <p className="sport-desc">Fast-paced sessions to build movement, control, and stamina.</p>
+                  <div className="sport-actions">
+                    <button
+                      type="button"
+                      className="ghost-btn"
+                      onClick={() => goTo('Badminton', 'membership')}
+                    >
+                      Membership
+                    </button>
+                    <button
+                      type="button"
+                      className="primary-btn sport-primary-btn"
+                      onClick={() => goTo('Badminton', 'proshop')}
+                    >
+                      ProShop
                     </button>
                   </div>
                 </div>
@@ -313,10 +289,8 @@ function App() {
       <header className="topbar">
         <div className="topbar-inner">
           <div className="branding">
-            <div className="logo-mark" aria-hidden="true">
-              <span className="logo-circle" />
-            </div>
-            <span className="branding-title">MatchPoint</span>
+            <img src="/logo-pin-transparent.png" alt="MatchPoint Logo" className="logo-mark" />
+            <span className="branding-title">MATCHPOINT</span>
           </div>
           <nav className="nav" aria-label="Primary">
             <button
