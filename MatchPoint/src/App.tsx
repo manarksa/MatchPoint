@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import SportsPage from './SportsPage';
 
 type Section = 'home' | 'about' | 'sports' | 'membership' | 'proshop';
 
@@ -142,45 +143,10 @@ function App() {
       case 'sports':
         return (
           <section className="section">
-            <h2 className="section-title">Sports</h2>
-            <div className="grid four">
-              <div className="info-card">
-                <h3>Padel</h3>
-                <p>Premium indoor and outdoor padel courts with smart lighting and booking.</p>
-                <ul className="bullets">
-                  <li>Singles & doubles courts</li>
-                  <li>Private and group sessions</li>
-                  <li>Matchmaking & leagues</li>
-                </ul>
-              </div>
-              <div className="info-card">
-                <h3>Badminton</h3>
-                <p>Fast sessions for technique, footwork, and powerful strokes.</p>
-                <ul className="bullets">
-                  <li>Beginner to advanced coaching</li>
-                  <li>Speed & endurance drills</li>
-                  <li>Smash & defense focus</li>
-                </ul>
-              </div>
-              <div className="info-card">
-                <h3>Archery</h3>
-                <p>Precision and form training with guided safety routines.</p>
-                <ul className="bullets">
-                  <li>Technique & alignment</li>
-                  <li>Target practice sessions</li>
-                  <li>Beginner-friendly coaching</li>
-                </ul>
-              </div>
-              <div className="info-card">
-                <h3>Horse Riding</h3>
-                <p>Programs designed for confidence, balance, and progression.</p>
-                <ul className="bullets">
-                  <li>Beginner riding classes</li>
-                  <li>Dressage & stable routines</li>
-                  <li>Family-friendly experiences</li>
-                </ul>
-              </div>
-            </div>
+            <SportsPage
+              onMembership={(sport) => goTo(sport, 'membership')}
+              onProShop={(sport) => goTo(sport, 'proshop')}
+            />
           </section>
         );
       case 'membership':
@@ -248,6 +214,16 @@ function App() {
                   <option>Horse Riding</option>
                   <option>Archery</option>
                   <option>Badminton</option>
+                  <option>Bowling</option>
+                  <option>Billiards</option>
+                  <option>Basketball</option>
+                  <option>Football</option>
+                  <option>Table Tennis</option>
+                  <option>Pilates</option>
+                  <option>Yoga</option>
+                  <option>Cycling</option>
+                  <option>Running</option>
+                  <option>Bungee Fitness</option>
                 </select>
               </label>
             </div>
