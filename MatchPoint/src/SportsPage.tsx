@@ -9,7 +9,7 @@ export const SPORTS_PAGE_ITEMS: SportCardItem[] = [
   {
     name: 'Horse Riding',
     description:
-      'Experience the timeless bond between rider and horse. Build core strength and balance while enjoying a unique connection with nature.',
+      'Experience the timeless bond between rider and horse Build core strength and balance while enjoying a unique connection with nature.',
     imageSrc: '/horse.jpg',
     imagePosition: 'object-[center_22%]',
   },
