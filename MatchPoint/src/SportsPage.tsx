@@ -97,13 +97,12 @@ export const SPORTS_PAGE_ITEMS: SportCardItem[] = [
 
 export type SportsPageProps = {
   onMembership: (sportName: string) => void;
-  onProShop: (sportName: string) => void;
 };
 
 const PAGE_INTRO =
   'A world of sport awaits.. an extraordinary experience designed specifically for you.';
 
-export default function SportsPage({ onMembership, onProShop }: SportsPageProps) {
+export default function SportsPage({ onMembership }: SportsPageProps) {
   return (
     <section className="w-full" aria-labelledby="sports-page-heading">
       {/* Intro matches site sections (no colored banner); 14 sports from SPORTS_PAGE_ITEMS */}
@@ -151,20 +150,13 @@ export default function SportsPage({ onMembership, onProShop }: SportsPageProps)
                 <p className="mt-2 line-clamp-4 text-sm font-normal leading-relaxed text-[#FFFFFF] sm:text-[15px] sm:leading-[1.65]">
                   {sport.description}
                 </p>
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-stretch">
+                <div className="mt-6 flex">
                   <button
                     type="button"
                     onClick={() => onMembership(sport.name)}
-                    className="inline-flex flex-1 items-center justify-center rounded-full border-2 border-[#FFFFFF] bg-transparent px-4 py-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-[#FFFFFF] transition-all duration-300 ease-in-out hover:bg-white/15 active:translate-y-px"
+                    className="inline-flex w-full items-center justify-center rounded-full border-2 border-[#FFFFFF] bg-transparent px-4 py-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-[#FFFFFF] transition-all duration-300 ease-in-out hover:bg-white/15 active:translate-y-px"
                   >
                     Membership
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onProShop(sport.name)}
-                    className="inline-flex flex-1 items-center justify-center rounded-full bg-[#137766] px-4 py-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-[#FFFFFF] shadow-[0_12px_28px_rgba(19,119,102,0.45)] transition-all duration-300 ease-in-out hover:bg-[#169882] hover:shadow-[0_14px_34px_rgba(19,119,102,0.55)] active:translate-y-px"
-                  >
-                    ProShop
                   </button>
                 </div>
               </div>
