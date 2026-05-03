@@ -452,55 +452,127 @@ function App() {
             />
           </section>
         );
-      case 'membership':
+      case 'membership': {
+        const membershipSports = ['Padel', 'Horse Riding', 'Archery', 'Badminton'] as const;
         return (
-          <section className="section">
-            <h2 className="section-title">Membership</h2>
-            <p className="section-text">
-              Choose the membership that fits your schedule. Your selected sport is{' '}
-              <strong>{selectedSport}</strong>.
-            </p>
-            <div className="grid three">
-              <div className="program-card">
-                <h3>Starter</h3>
-                <p>Perfect to begin: access to facilities and 2 coached sessions per month.</p>
-                <span className="meta">Monthly · Best for beginners</span>
+          <section className="section section--membership">
+            <header className="membership-hero">
+              <p className="membership-eyebrow">Membership</p>
+              <h2 className="membership-title">باقات عضوية متناسقة مع تجربة MatchPoint</h2>
+              <p className="membership-lede">
+                اختر رياضتك أولاً، ثم الباقة. نفس هوية التصميم المستخدمة في الصفحة الرئيسية
+                والمتجر — بطاقات واضحة، ألوان ذهبية وأخضر، وجاهزة لربط الدفع لاحقاً.
+              </p>
+              <div className="membership-pills" role="group" aria-label="اختيار الرياضة">
+                {membershipSports.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    className={
+                      selectedSport === s ? 'membership-pill membership-pill--active' : 'membership-pill'
+                    }
+                    onClick={() => setSelectedSport(s)}
+                  >
+                    {s}
+                  </button>
+                ))}
               </div>
-              <div className="program-card featured">
-                <h3>Pro</h3>
-                <p>
-                  Our most popular plan: priority bookings, weekly coaching, and member-only
-                  events.
-                </p>
-                <span className="meta">Monthly · Priority access</span>
-              </div>
-              <div className="program-card">
-                <h3>Elite</h3>
-                <p>High-performance coaching, advanced clinics, and premium time slots.</p>
-                <span className="meta">Quarterly · Competitive athletes</span>
-              </div>
-            </div>
-            <h3 className="section-subtitle">Included for {selectedSport}</h3>
-            <div className="course-grid">
-              <div className="course-card">
-                <img src="/matchpoint-hero.png" alt="Coaching sessions" className="course-img" />
-                <div className="course-body">
-                  <h4>Coached Sessions</h4>
-                  <p>Structured sessions designed around your level, goals, and schedule.</p>
-                  <span className="meta">Weekly options</span>
+            </header>
+
+            <div className="membership-tiers">
+              <article className="membership-tier">
+                <div className="membership-tier-head">
+                  <h3 className="membership-tier-name">Starter</h3>
+                  <p className="membership-tier-tagline">بداية مثالية للمبتدئين</p>
                 </div>
-              </div>
-              <div className="course-card">
-                <img src="/matchpoint-hero.png" alt="Member perks" className="course-img" />
-                <div className="course-body">
-                  <h4>Member Perks</h4>
-                  <p>Exclusive discounts, early access to events, and priority booking windows.</p>
-                  <span className="meta">Limited slots</span>
+                <div className="membership-tier-price">
+                  <span className="membership-tier-amount">199</span>
+                  <span className="membership-tier-currency">ر.س</span>
+                  <span className="membership-tier-period">/ شهر</span>
+                </div>
+                <ul className="membership-tier-list">
+                  <li>دخول المرافق حسب الجدول المعتمد</li>
+                  <li>جلستان تدريبية شهرياً مع مدرب</li>
+                  <li>خصم 10% على ProShop</li>
+                </ul>
+                <button type="button" className="membership-cta membership-cta--outline">
+                  اختيار الباقة
+                </button>
+              </article>
+
+              <article className="membership-tier membership-tier--featured">
+                <div className="membership-tier-ribbon">الأكثر طلباً</div>
+                <div className="membership-tier-head">
+                  <h3 className="membership-tier-name">Pro</h3>
+                  <p className="membership-tier-tagline">أولوية في الحجز وتدريب أسبوعي</p>
+                </div>
+                <div className="membership-tier-price">
+                  <span className="membership-tier-amount">349</span>
+                  <span className="membership-tier-currency">ر.س</span>
+                  <span className="membership-tier-period">/ شهر</span>
+                </div>
+                <ul className="membership-tier-list">
+                  <li>حجز بأولوية خلال أوقات الذروة</li>
+                  <li>جلسة تدريب أسبوعية مخصصة</li>
+                  <li>فعاليات وحضور أعضاء فقط</li>
+                  <li>خصم 15% على ProShop</li>
+                </ul>
+                <button type="button" className="membership-cta membership-cta--primary">
+                  اشترك الآن
+                </button>
+              </article>
+
+              <article className="membership-tier">
+                <div className="membership-tier-head">
+                  <h3 className="membership-tier-name">Elite</h3>
+                  <p className="membership-tier-tagline">للرياضيين الطامحين والمنافسة</p>
+                </div>
+                <div className="membership-tier-price">
+                  <span className="membership-tier-amount">899</span>
+                  <span className="membership-tier-currency">ر.س</span>
+                  <span className="membership-tier-period">/ ربع سنوي</span>
+                </div>
+                <ul className="membership-tier-list">
+                  <li>متابعة أداء وخطة تدريب متقدمة</li>
+                  <li>عيادات ودورات تقنية موسمية</li>
+                  <li>أفضل فترات الحجز وحصص محدودة</li>
+                  <li>خصم 20% على ProShop</li>
+                </ul>
+                <button type="button" className="membership-cta membership-cta--outline">
+                  اختيار الباقة
+                </button>
+              </article>
+            </div>
+
+            <div className="membership-includes">
+              <h3 className="membership-includes-title">يشمل اشتراكك لـ {selectedSport}</h3>
+              <div className="membership-include-grid">
+                <div className="membership-include-card">
+                  <span className="membership-include-kicker">تدريب</span>
+                  <h4 className="membership-include-heading">جلسات موجهة</h4>
+                  <p className="membership-include-text">
+                    برامج مبنية على مستواك وأهدافك ضمن رياضة {selectedSport}.
+                  </p>
+                </div>
+                <div className="membership-include-card">
+                  <span className="membership-include-kicker">مزايا</span>
+                  <h4 className="membership-include-heading">أولوية وخصومات</h4>
+                  <p className="membership-include-text">
+                    نوافذ حجز مبكرة وخصومات متجر متصاعدة حسب الباقة.
+                  </p>
+                </div>
+                <div className="membership-include-card">
+                  <span className="membership-include-kicker">مجتمع</span>
+                  <h4 className="membership-include-heading">فعاليات الأعضاء</h4>
+                  <p className="membership-include-text">
+                    لقاءات، تحديات ودية، وتجربة نادٍ رياضي متكاملة.
+                  </p>
                 </div>
               </div>
             </div>
           </section>
         );
+      }
       case 'proshop':
         return (
           <section className="section">
@@ -559,7 +631,13 @@ function App() {
       <header className="topbar">
         <div className="topbar-inner">
           <div className="branding">
-            <img src="/logo-pin-transparent.png" alt="MatchPoint Logo" className="logo-mark" />
+            <img
+              src="/matchpoint-logo-mark.png"
+              alt="MatchPoint"
+              className="logo-mark"
+              width={56}
+              height={64}
+            />
             <span className="branding-title">MATCHPOINT</span>
           </div>
           <nav className="nav" aria-label="Primary">
