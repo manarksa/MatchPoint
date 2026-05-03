@@ -26,6 +26,8 @@ export type UserBooking = {
   time: string;
   status: 'Confirmed' | 'Upcoming' | 'Completed';
   location: string;
+  /** Session meta: duration, participants, member notes */
+  notes?: string;
 };
 
 export type UserSettings = {
@@ -441,6 +443,7 @@ export default function ProfilePage({
                   <div>
                     <h3>{booking.sport}</h3>
                     <p>{booking.location}</p>
+                    {booking.notes ? <p className="profile-booking-notes">{booking.notes}</p> : null}
                   </div>
                   <div className="profile-booking-meta">
                     <span>{booking.date}</span>

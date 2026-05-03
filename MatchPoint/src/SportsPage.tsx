@@ -97,12 +97,13 @@ export const SPORTS_PAGE_ITEMS: SportCardItem[] = [
 
 export type SportsPageProps = {
   onMembership: (sportName: string) => void;
+  onBook: (sportName: string) => void;
 };
 
 const PAGE_INTRO =
   'A world of sport awaits.. an extraordinary experience designed specifically for you.';
 
-export default function SportsPage({ onMembership }: SportsPageProps) {
+export default function SportsPage({ onMembership, onBook }: SportsPageProps) {
   return (
     <section className="w-full" aria-labelledby="sports-page-heading">
       {/* Intro matches site sections (no colored banner); 14 sports from SPORTS_PAGE_ITEMS */}
@@ -150,11 +151,18 @@ export default function SportsPage({ onMembership }: SportsPageProps) {
                 <p className="mt-2 line-clamp-4 text-sm font-normal leading-relaxed text-[#FFFFFF] sm:text-[15px] sm:leading-[1.65]">
                   {sport.description}
                 </p>
-                <div className="mt-6 flex">
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-stretch">
+                  <button
+                    type="button"
+                    onClick={() => onBook(sport.name)}
+                    className="inline-flex flex-1 items-center justify-center rounded-full border-2 border-transparent bg-[#137766] px-4 py-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-[0_10px_28px_rgba(19,119,102,0.45)] transition-all duration-300 ease-in-out hover:brightness-110 active:translate-y-px"
+                  >
+                    Book · حجز
+                  </button>
                   <button
                     type="button"
                     onClick={() => onMembership(sport.name)}
-                    className="inline-flex w-full items-center justify-center rounded-full border-2 border-[#FFFFFF] bg-transparent px-4 py-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-[#FFFFFF] transition-all duration-300 ease-in-out hover:bg-white/15 active:translate-y-px"
+                    className="inline-flex flex-1 items-center justify-center rounded-full border-2 border-[#FFFFFF] bg-transparent px-4 py-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-[#FFFFFF] transition-all duration-300 ease-in-out hover:bg-white/15 active:translate-y-px"
                   >
                     Membership
                   </button>

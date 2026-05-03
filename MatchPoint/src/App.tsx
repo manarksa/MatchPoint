@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import './App.css';
 import SportsPage from './SportsPage';
+import SportBookingModal from './SportBookingModal';
+import AboutPage from './AboutPage';
+import MembershipPage from './MembershipPage';
 import ProfilePage, {
   type ProfileTab,
   type UserProfile,
@@ -257,12 +260,13 @@ function App() {
   const [activeSection, setActiveSection] = useState<Section>('home');
   const [selectedSport, setSelectedSport] = useState<string>('Padel');
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [bookings] = useState<UserBooking[]>(DEFAULT_BOOKINGS);
+  const [bookings, setBookings] = useState<UserBooking[]>(DEFAULT_BOOKINGS);
   const [settings, setSettings] = useState<UserSettings>(DEFAULT_SETTINGS);
   const [walletBalance, setWalletBalance] = useState(350);
   const [transactions, setTransactions] = useState<WalletTransaction[]>(DEFAULT_TRANSACTIONS);
   const [dashboardTab, setDashboardTab] = useState<ProfileTab>('account');
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [sportsBookingSport, setSportsBookingSport] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const initials = useMemo(() => {
@@ -280,19 +284,26 @@ function App() {
         settings: UserSettings;
         walletBalance?: number;
         transactions?: WalletTransaction[];
+        bookings?: UserBooking[];
       };
       if (saved.profile) setProfile(normalizeProfile(saved.profile));
       if (saved.settings) setSettings(saved.settings);
       if (typeof saved.walletBalance === 'number') setWalletBalance(saved.walletBalance);
       if (saved.transactions) setTransactions(saved.transactions);
+      if (saved.bookings && Array.isArray(saved.bookings) && saved.bookings.length > 0) {
+        setBookings(saved.bookings);
+      }
     } catch {
       localStorage.removeItem(PROFILE_STORAGE_KEY);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify({ profile, settings, walletBalance, transactions }));
-  }, [profile, settings, walletBalance, transactions]);
+    localStorage.setItem(
+      PROFILE_STORAGE_KEY,
+      JSON.stringify({ profile, settings, walletBalance, transactions, bookings }),
+    );
+  }, [profile, settings, walletBalance, transactions, bookings]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -315,6 +326,11 @@ function App() {
     setIsProfileMenuOpen(false);
   };
 
+  const addSportBooking = (payload: Omit<UserBooking, 'id'>) => {
+    const id = `BKG-${Date.now().toString(36).toUpperCase().slice(-10)}`;
+    setBookings((prev) => [{ ...payload, id }, ...prev]);
+  };
+
   const topUpWallet = (amount: number) => {
     setWalletBalance((prev) => Number((prev + amount).toFixed(2)));
     const nextTx: WalletTransaction = {
@@ -327,14 +343,20 @@ function App() {
     setTransactions((prev) => [nextTx, ...prev]);
   };
 
+  const scrollToSiteContact = () => {
+    document.getElementById('site-contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const signOut = () => {
     setProfile(null);
     setSettings(DEFAULT_SETTINGS);
     setWalletBalance(350);
     setTransactions(DEFAULT_TRANSACTIONS);
+    setBookings(DEFAULT_BOOKINGS);
     setDashboardTab('account');
     localStorage.removeItem(PROFILE_STORAGE_KEY);
     setIsProfileMenuOpen(false);
+    setSportsBookingSport(null);
     setActiveSection('home');
   };
 
@@ -362,6 +384,13 @@ function App() {
                   <div className="sport-actions">
                     <button
                       type="button"
+                      className="sport-book-btn"
+                      onClick={() => setSportsBookingSport('Horse Riding')}
+                    >
+                      Book · حجز
+                    </button>
+                    <button
+                      type="button"
                       className="ghost-btn"
                       onClick={() => goTo('Horse Riding', 'membership')}
                     >
@@ -382,6 +411,13 @@ function App() {
                   <h3 className="sport-name">Padel</h3>
                   <p className="sport-desc">Power, precision, and tactical training for all players.</p>
                   <div className="sport-actions">
+                    <button
+                      type="button"
+                      className="sport-book-btn"
+                      onClick={() => setSportsBookingSport('Padel')}
+                    >
+                      Book · حجز
+                    </button>
                     <button
                       type="button"
                       className="ghost-btn"
@@ -406,6 +442,13 @@ function App() {
                   <div className="sport-actions">
                     <button
                       type="button"
+                      className="sport-book-btn"
+                      onClick={() => setSportsBookingSport('Badminton')}
+                    >
+                      Book · حجز
+                    </button>
+                    <button
+                      type="button"
                       className="ghost-btn"
                       onClick={() => goTo('Badminton', 'membership')}
                     >
@@ -419,29 +462,8 @@ function App() {
         );
       case 'about':
         return (
-          <section className="section">
-            <h2 className="section-title">About MatchPoint</h2>
-            <p className="section-text">
-              MatchPoint is a modern sports destination designed for athletes, families, and
-              lifestyle seekers. We combine world-class facilities with a warm, welcoming
-              atmosphere so every visit feels like a retreat.
-            </p>
-            <div className="grid two">
-              <div className="info-card">
-                <h3>Our Vision</h3>
-                <p>
-                  To become the region&apos;s leading hub for racket sports, equestrian programs,
-                  and holistic performance training.
-                </p>
-              </div>
-              <div className="info-card">
-                <h3>Our Promise</h3>
-                <p>
-                  Thoughtfully designed programs, professional coaches, and seamless digital
-                  booking to make your sports journey effortless.
-                </p>
-              </div>
-            </div>
+          <section className="section section--about">
+            <AboutPage onGoTo={setActiveSection} onScrollToContact={scrollToSiteContact} />
           </section>
         );
       case 'sports':
@@ -449,130 +471,16 @@ function App() {
           <section className="section">
             <SportsPage
               onMembership={(sport) => goTo(sport, 'membership')}
+              onBook={(sport) => setSportsBookingSport(sport)}
             />
           </section>
         );
-      case 'membership': {
-        const membershipSports = ['Padel', 'Horse Riding', 'Archery', 'Badminton'] as const;
+      case 'membership':
         return (
-          <section className="section section--membership">
-            <header className="membership-hero">
-              <p className="membership-eyebrow">Membership</p>
-              <h2 className="membership-title">باقات عضوية متناسقة مع تجربة MatchPoint</h2>
-              <p className="membership-lede">
-                اختر رياضتك أولاً، ثم الباقة. نفس هوية التصميم المستخدمة في الصفحة الرئيسية
-                والمتجر — بطاقات واضحة، ألوان ذهبية وأخضر، وجاهزة لربط الدفع لاحقاً.
-              </p>
-              <div className="membership-pills" role="group" aria-label="اختيار الرياضة">
-                {membershipSports.map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    className={
-                      selectedSport === s ? 'membership-pill membership-pill--active' : 'membership-pill'
-                    }
-                    onClick={() => setSelectedSport(s)}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </header>
-
-            <div className="membership-tiers">
-              <article className="membership-tier">
-                <div className="membership-tier-head">
-                  <h3 className="membership-tier-name">Starter</h3>
-                  <p className="membership-tier-tagline">بداية مثالية للمبتدئين</p>
-                </div>
-                <div className="membership-tier-price">
-                  <span className="membership-tier-amount">199</span>
-                  <span className="membership-tier-currency">ر.س</span>
-                  <span className="membership-tier-period">/ شهر</span>
-                </div>
-                <ul className="membership-tier-list">
-                  <li>دخول المرافق حسب الجدول المعتمد</li>
-                  <li>جلستان تدريبية شهرياً مع مدرب</li>
-                  <li>خصم 10% على ProShop</li>
-                </ul>
-                <button type="button" className="membership-cta membership-cta--outline">
-                  اختيار الباقة
-                </button>
-              </article>
-
-              <article className="membership-tier membership-tier--featured">
-                <div className="membership-tier-ribbon">الأكثر طلباً</div>
-                <div className="membership-tier-head">
-                  <h3 className="membership-tier-name">Pro</h3>
-                  <p className="membership-tier-tagline">أولوية في الحجز وتدريب أسبوعي</p>
-                </div>
-                <div className="membership-tier-price">
-                  <span className="membership-tier-amount">349</span>
-                  <span className="membership-tier-currency">ر.س</span>
-                  <span className="membership-tier-period">/ شهر</span>
-                </div>
-                <ul className="membership-tier-list">
-                  <li>حجز بأولوية خلال أوقات الذروة</li>
-                  <li>جلسة تدريب أسبوعية مخصصة</li>
-                  <li>فعاليات وحضور أعضاء فقط</li>
-                  <li>خصم 15% على ProShop</li>
-                </ul>
-                <button type="button" className="membership-cta membership-cta--primary">
-                  اشترك الآن
-                </button>
-              </article>
-
-              <article className="membership-tier">
-                <div className="membership-tier-head">
-                  <h3 className="membership-tier-name">Elite</h3>
-                  <p className="membership-tier-tagline">للرياضيين الطامحين والمنافسة</p>
-                </div>
-                <div className="membership-tier-price">
-                  <span className="membership-tier-amount">899</span>
-                  <span className="membership-tier-currency">ر.س</span>
-                  <span className="membership-tier-period">/ ربع سنوي</span>
-                </div>
-                <ul className="membership-tier-list">
-                  <li>متابعة أداء وخطة تدريب متقدمة</li>
-                  <li>عيادات ودورات تقنية موسمية</li>
-                  <li>أفضل فترات الحجز وحصص محدودة</li>
-                  <li>خصم 20% على ProShop</li>
-                </ul>
-                <button type="button" className="membership-cta membership-cta--outline">
-                  اختيار الباقة
-                </button>
-              </article>
-            </div>
-
-            <div className="membership-includes">
-              <h3 className="membership-includes-title">يشمل اشتراكك لـ {selectedSport}</h3>
-              <div className="membership-include-grid">
-                <div className="membership-include-card">
-                  <span className="membership-include-kicker">تدريب</span>
-                  <h4 className="membership-include-heading">جلسات موجهة</h4>
-                  <p className="membership-include-text">
-                    برامج مبنية على مستواك وأهدافك ضمن رياضة {selectedSport}.
-                  </p>
-                </div>
-                <div className="membership-include-card">
-                  <span className="membership-include-kicker">مزايا</span>
-                  <h4 className="membership-include-heading">أولوية وخصومات</h4>
-                  <p className="membership-include-text">
-                    نوافذ حجز مبكرة وخصومات متجر متصاعدة حسب الباقة.
-                  </p>
-                </div>
-                <div className="membership-include-card">
-                  <span className="membership-include-kicker">مجتمع</span>
-                  <h4 className="membership-include-heading">فعاليات الأعضاء</h4>
-                  <p className="membership-include-text">
-                    لقاءات، تحديات ودية، وتجربة نادٍ رياضي متكاملة.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <section className="section section--membership-v2">
+            <MembershipPage initialSportName={selectedSport} onSportNameChange={setSelectedSport} />
           </section>
         );
-      }
       case 'proshop':
         return (
           <section className="section">
@@ -628,6 +536,18 @@ function App() {
 
   return (
     <div className="app-shell">
+      {sportsBookingSport ? (
+        <SportBookingModal
+          key={sportsBookingSport}
+          sportName={sportsBookingSport}
+          onClose={() => setSportsBookingSport(null)}
+          onSubmit={addSportBooking}
+          onViewBookings={() => {
+            setSportsBookingSport(null);
+            openProfilePanel('bookings');
+          }}
+        />
+      ) : null}
       <header className="topbar">
         <div className="topbar-inner">
           <div className="branding">
@@ -666,7 +586,12 @@ function App() {
               MEMBERSHIP
             </button>
             <button
-              className={activeSection === 'proshop' ? 'nav-link active' : 'nav-link'}
+              type="button"
+              className={
+                activeSection === 'proshop'
+                  ? 'nav-link nav-link--proshop nav-link--proshop-active'
+                  : 'nav-link nav-link--proshop'
+              }
               onClick={() => setActiveSection('proshop')}
             >
               PROSHOP
@@ -804,7 +729,7 @@ function App() {
               </button>
               <span className="footer-note">Booking system integration ready.</span>
             </div>
-            <div className="footer-col">
+            <div className="footer-col" id="site-contact">
               <div className="footer-heading">Contact</div>
               <span className="footer-note">Riyadh, Saudi Arabia</span>
               <span className="footer-note">support@matchpoint.sa</span>
